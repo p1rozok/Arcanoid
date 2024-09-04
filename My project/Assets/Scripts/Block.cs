@@ -11,7 +11,7 @@ public class Block : MonoBehaviour
     {
         gameManager = Object.FindFirstObjectByType<GameManager>();
 
-        // ƒобавл€ем блок в список блоков GameManager при его создании
+       
         gameManager.blocks.Add(this);
 
         Debug.Log("Block initialized: " + gameObject.name + " with hitPoints: " + hitPoints);
@@ -29,7 +29,7 @@ public class Block : MonoBehaviour
                 Debug.Log("Block destroyed: " + gameObject.name);
                 gameManager.AddScore(points);
 
-                // ”дал€ем блок из списка и провер€ем на победу
+                
                 gameManager.RemoveBlock(this);
 
                 Destroy(gameObject);

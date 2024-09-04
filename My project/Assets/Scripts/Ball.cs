@@ -37,7 +37,7 @@ public class BallController : MonoBehaviour
     {
         Debug.Log("Collision with: " + collision.gameObject.name);
 
-        // ѕроверка на наличие коллайдера и тега "Paddle"
+       
         if (collision.collider != null && collision.gameObject.CompareTag("Paddle"))
         {
             Debug.Log("Collision with paddle!");
