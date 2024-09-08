@@ -1,17 +1,18 @@
 
+
 using UnityEngine;
 
 public class Block : MonoBehaviour
 {
     public int hitPoints = 1;
     public int points = 10;
+    public GameObject powerUpPrefab;  // Префаб пауэр-апа (шарик)
     private GameManager gameManager;
 
     private void Start()
     {
         gameManager = Object.FindFirstObjectByType<GameManager>();
 
-       
         gameManager.blocks.Add(this);
 
         Debug.Log("Block initialized: " + gameObject.name + " with hitPoints: " + hitPoints);
@@ -29,9 +30,13 @@ public class Block : MonoBehaviour
                 Debug.Log("Block destroyed: " + gameObject.name);
                 gameManager.AddScore(points);
 
-                
-                gameManager.RemoveBlock(this);
+                // Спавним пауэр-ап с определённым шансом (например, 30%)
+                if (Random.value > 0.7f)
+                {
+                    Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
+                }
 
+                gameManager.RemoveBlock(this);
                 Destroy(gameObject);
             }
             else

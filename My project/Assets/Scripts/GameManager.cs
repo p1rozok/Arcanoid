@@ -2,9 +2,11 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 
+using System.Threading;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;  
     public GameObject ballPrefab;
     public Transform spawnPoint;
     public int lives = 3;
@@ -18,6 +20,12 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI livesText;
     public LevelGenerator levelGenerator;
     public List<Block> blocks = new List<Block>();
+    public Barrier barrier;  
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -103,24 +111,28 @@ public class GameManager : MonoBehaviour
         Debug.Log("Lives updated: " + lives);
     }
 
-  
     public void RemoveBlock(Block block)
     {
-        blocks.Remove(block);  
-        if (blocks.Count == 0)  
+        blocks.Remove(block);
+        if (blocks.Count == 0)
         {
             WinGame();
         }
     }
 
-   
+    public void ActivateBarrier()
+    {
+        barrier.Activate();
+        Debug.Log("Barrier activated!");
+    }
+
     public void NextLevel()
     {
-        Time.timeScale = 1f; 
-        winUI.SetActive(false); 
-        currentLevel++; 
-        UpdateLevelText(); 
-        levelGenerator.GenerateLevel(); 
+        Time.timeScale = 1f;
+        winUI.SetActive(false);
+        currentLevel++;
+        UpdateLevelText();
+        levelGenerator.GenerateLevel();
         Debug.Log("Next level: " + currentLevel + ". Generating new level...");
     }
 }
